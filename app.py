@@ -950,16 +950,45 @@ if auto_refresh:
 
 st.write("---")
 st.markdown("### 📈 持股歷史股價趨勢 (近 30 日)")
+@st.cache_data(ttl=300)
+def get_data(symbol):
+    return yf.download(symbol, period="30d", progress=False)
 
-current_etfs = [item['symbol'] for item in st.session_state.my_data.get('etfs', [])]
+try:
+    df = get_data(symbol)
 
-if current_etfs:
-    with st.spinner("正在繪製高精度股價戰報..."):
-        try:
-            price_history = yf.download(current_etfs, period="1mo")['Close']
-            
-            if len(current_etfs) == 1:
-                price_history = price_history.to_frame()
+    if df is None or df.empty:
+        st.warning("⚠️ 抓不到股價資料")
+    else:
+        if 'Close' not in df.columns:
+            st.error("❌ 沒有 Close 欄位")
+        else:
+            price_df = df[['Close']].copy()
+            price_df.columns = ['收盤價']
+            st.line_chart(price_df, use_container_width=True)
+
+except Exception as e:
+    st.error(f"❌ 圖表產生失敗：{str(e)}")
+
+    # ✅ 檢查資料
+    if df is None or df.empty:
+        st.warning("⚠️ 抓不到股價資料，請確認代碼或稍後再試")
+    else:
+        # ✅ 確保有 Close 欄位
+        if 'Close' not in df.columns:
+            st.error("❌ 資料格式錯誤（沒有 Close 欄位）")
+        else:
+            # ✅ 只取收盤價
+            price_df = df[['Close']].copy()
+
+            # ✅ 改欄位名稱（顯示用）
+            price_df.columns = ['收盤價']
+
+            # ✅ 顯示圖表
+            st.line_chart(price_df)
+
+except Exception as e:
+    st.error(f"❌ 圖表產生失敗：{str(e)}")
                 price_history.columns = [st.session_state.my_data['etfs'][0]['name']]
             else:
                 name_map = {item['symbol']: item['name'] for item in st.session_state.my_data['etfs']}
