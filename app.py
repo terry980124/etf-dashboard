@@ -1002,7 +1002,6 @@ except Exception as e:
 
 except Exception as e:
     st.error(f"❌ 圖表產生失敗：{str(e)}")
-                price_history.columns = [st.session_state.my_data['etfs'][0]['name']]
             else:
                 name_map = {item['symbol']: item['name'] for item in st.session_state.my_data['etfs']}
                 price_history = price_history.rename(columns=name_map)
