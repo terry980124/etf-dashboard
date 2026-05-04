@@ -951,7 +951,7 @@ if auto_refresh:
     st.rerun()
 
 st.write("---")
-st.markdown("### 📈 持股歷史股價趨勢 (近 30 日)")
+st.markdown("### 📈 持股歷史報酬率趨勢 (近 30 日)")
 
 try:
     price_history = pd.DataFrame()
@@ -968,7 +968,11 @@ try:
     if price_history.empty:
         st.warning("⚠️ 抓不到任何股價資料")
     else:
-        st.line_chart(price_history)
+        # ⭐ 重點：轉成報酬率 %
+        returns = price_history / price_history.iloc[0] - 1
+        returns = returns * 100
+
+        st.line_chart(returns)
 
 except Exception as e:
     st.error(f"❌ 圖表產生失敗：{str(e)}")
