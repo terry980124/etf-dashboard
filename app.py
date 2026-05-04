@@ -965,11 +965,13 @@ try:
         else:
             price_df = df[['Close']].copy()
 
-            # 👇 正確位置（在正常流程裡）
+            # 正確流程
             price_history = price_df.copy()
 
             if len(st.session_state.my_data['etfs']) == 1:
-                price_history.columns = [st.session_state.my_data['etfs'][0]['name']]
+                price_history.columns = [
+                    st.session_state.my_data['etfs'][0]['name']
+                ]
             else:
                 name_map = {
                     item['symbol']: item['name']
