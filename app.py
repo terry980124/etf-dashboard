@@ -11,7 +11,6 @@ import altair as alt
 @st.cache_data(ttl=300)
 def get_data(symbol):
     return yf.download(symbol, period="30d", progress=False)
-    
 # --- 1. 網頁基礎設定 ---
 st.set_page_config(page_title="ETF 投資戰情室", layout="wide")
 
