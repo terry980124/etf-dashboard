@@ -15,7 +15,7 @@ def get_data(symbol):
 st.set_page_config(page_title="ETF 投資戰情室", layout="wide")
 
 if "username" not in st.session_state:
-    st.session_state.username = "terry"
+    st.session_state.username = "terry大神"
 st.markdown("""
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
