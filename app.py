@@ -492,6 +492,12 @@ macro_data = fetch_macro_data()
 
 # --- 5. 介面呈現 ---
 st.title("📈 實戰資產戰情室")
+if g_today_pnl > 0:
+    st.success(f"📈 今日整體上漲 +{g_today_pnl:,.0f} 元")
+elif g_today_pnl < 0:
+    st.error(f"📉 今日整體下跌 {g_today_pnl:,.0f} 元")
+else:
+    st.info("今日無變動")
 st.caption(f"最後更新：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 news_data = fetch_etf_news()
