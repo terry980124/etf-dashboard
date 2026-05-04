@@ -981,36 +981,3 @@ try:
 
 except Exception as e:
     st.error(f"❌ 圖表產生失敗：{str(e)}")
-
-                x=alt.X(f'{date_col}:T',
-                        axis=alt.Axis(
-                            format='%d日',      
-                            title=None,
-                            grid=False
-                        )),
-                y=alt.Y('Price:Q',
-                        scale=alt.Scale(zero=False), 
-                        axis=alt.Axis(
-                            title=None,
-                            labelFontSize=10,  
-                            tickMinStep=1,     
-                            tickCount=40,      
-                            gridColor='#f0f2f6'
-                        )),
-                color=alt.Color('ETF:N', legend=alt.Legend(title=None, orient="bottom")),
-                tooltip=[
-                    alt.Tooltip(f'{date_col}:T', format='%Y/%m/%d', title='日期'),
-                    alt.Tooltip('ETF:N', title='標的'),
-                    alt.Tooltip('Price:Q', format='.2f', title='收盤價')
-                ]
-            ).properties(
-                height=450
-            ).interactive()
-
-            st.altair_chart(chart, use_container_width=True)
-            st.caption("數據來源：Yahoo Finance (近一個月每日收盤價趨勢)")
-        except Exception as e:
-            st.error(f"圖表產生失敗：{e}")
-            st.info("提示：請確認網路連線正常或 ETF 代碼是否正確。")
-else:
-    st.info("目前庫存中沒有標的。請由上方「標的管理」面板新增您的愛股！")
