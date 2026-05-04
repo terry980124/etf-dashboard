@@ -982,28 +982,6 @@ try:
 except Exception as e:
     st.error(f"❌ 圖表產生失敗：{str(e)}")
 
-    # ✅ 檢查資料
-    if df is None or df.empty:
-        st.warning("⚠️ 抓不到股價資料，請確認代碼或稍後再試")
-    else:
-        # ✅ 確保有 Close 欄位
-        if 'Close' not in df.columns:
-            st.error("❌ 資料格式錯誤（沒有 Close 欄位）")
-        else:
-            # ✅ 只取收盤價
-            price_df = df[['Close']].copy()
-
-            # ✅ 改欄位名稱（顯示用）
-            price_df.columns = ['收盤價']
-
-            # ✅ 顯示圖表
-            st.line_chart(price_df)
-            
-            df_chart = price_history.reset_index()
-            date_col = df_chart.columns[0]
-            df_melted = df_chart.melt(id_vars=[date_col], var_name='ETF', value_name='Price')
-
-            chart = alt.Chart(df_melted).mark_line().encode(
                 x=alt.X(f'{date_col}:T',
                         axis=alt.Axis(
                             format='%d日',      
