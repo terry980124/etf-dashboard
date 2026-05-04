@@ -83,11 +83,12 @@ st.markdown("""
         }
     }
     .flash-gold-box {
-        background-color: #fffdf5;
-        border-radius: 12px;
-        padding: 15px;
-        border: 2px solid #f1c40f;
-        animation: lightning-strike 0.1s infinite;
+    background-color: #fffdf5;
+    border-radius: 12px;
+    padding: 15px;
+    border: 2px solid #f1c40f;
+    /* animation 拿掉 */
+}
     }
 
     .alert-high { background-color: #ffebee; border: 2px solid #ef5350; border-left: 8px solid #d32f2f; padding: 15px; border-radius: 8px; margin-bottom: 15px; color: #b71c1c; font-size: 16px; font-weight: bold; animation: pulse-red 2s infinite;}
