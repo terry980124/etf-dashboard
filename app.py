@@ -11,7 +11,20 @@ import altair as alt
 
 # --- 1. 網頁基礎設定 ---
 st.set_page_config(page_title="ETF 投資戰情室", layout="wide")
-
+st.markdown("""
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html, body, [class*="css"]  {
+    font-size: 16px;
+}
+@media (max-width: 768px) {
+    .stMetric { font-size: 14px !important; }
+    .triple-val-r, .triple-val-g, .triple-val-gold {
+        font-size: 20px !important;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
 # 自定義 CSS
 st.markdown("""
     <style>
