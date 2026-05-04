@@ -981,7 +981,6 @@ try:
 
 except Exception as e:
     st.error(f"❌ 圖表產生失敗：{str(e)}")
-    st.error(f"❌ 圖表產生失敗：{str(e)}")
 
     # ✅ 檢查資料
     if df is None or df.empty:
