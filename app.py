@@ -1000,12 +1000,6 @@ except Exception as e:
 
             # ✅ 顯示圖表
             st.line_chart(price_df)
-
-except Exception as e:
-    st.error(f"❌ 圖表產生失敗：{str(e)}")
-            else:
-                name_map = {item['symbol']: item['name'] for item in st.session_state.my_data['etfs']}
-                price_history = price_history.rename(columns=name_map)
             
             df_chart = price_history.reset_index()
             date_col = df_chart.columns[0]
