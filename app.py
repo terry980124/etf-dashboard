@@ -964,10 +964,23 @@ try:
             st.error("❌ 沒有 Close 欄位")
         else:
             price_df = df[['Close']].copy()
-            price_df.columns = ['收盤價']
-            st.line_chart(price_df, use_container_width=True)
+
+            # 👇 正確位置（在正常流程裡）
+            price_history = price_df.copy()
+
+            if len(st.session_state.my_data['etfs']) == 1:
+                price_history.columns = [st.session_state.my_data['etfs'][0]['name']]
+            else:
+                name_map = {
+                    item['symbol']: item['name']
+                    for item in st.session_state.my_data['etfs']
+                }
+                price_history = price_history.rename(columns=name_map)
+
+            st.line_chart(price_history)
 
 except Exception as e:
+    st.error(f"❌ 圖表產生失敗：{str(e)}")
     st.error(f"❌ 圖表產生失敗：{str(e)}")
 
     # ✅ 檢查資料
