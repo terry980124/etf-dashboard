@@ -953,7 +953,6 @@ if auto_refresh:
 st.write("---")
 st.markdown("### 📈 持股歷史股價趨勢 (近 30 日)")
 
-
 try:
     df = get_data(symbol)
 
@@ -965,7 +964,6 @@ try:
         else:
             price_df = df[['Close']].copy()
 
-            # 正確流程
             price_history = price_df.copy()
 
             if len(st.session_state.my_data['etfs']) == 1:
