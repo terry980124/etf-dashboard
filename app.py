@@ -406,7 +406,7 @@ try:
         pay_date = (latest_div_date + timedelta(days=28)).strftime('%Y-%m-%d')
 
         is_announced = True
-
+ 
 except Exception as e:
     print(f"配息抓取失敗: {e}")
 
