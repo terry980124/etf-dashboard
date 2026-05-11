@@ -391,11 +391,11 @@ def fetch_data(etf_list):
                 price_alerts.append({"name": item['name'], "price": curr_p, "target": a_low, "type": "low"})
 
             is_announced, div_amount, ex_date, pay_date = False, 0, "待官方公告", "待官方公告"
-            
-try:
-    divs = tk.dividends
+# ===== 優先使用 API 自動抓最新配息 =====            
+ try:
+     divs = tk.dividends
 
-    if not divs.empty:
+     if not divs.empty:
         latest_div_date = divs.index[-1]
         latest_div_amount = float(divs.iloc[-1])
 
@@ -407,7 +407,7 @@ try:
 
         is_announced = True
  
-except Exception as e:
+ except Exception as e:
     print(f"配息抓取失敗: {e}")
 
 # ===== API 抓不到 → 使用手動資料庫 =====
