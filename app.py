@@ -392,7 +392,7 @@ def fetch_data(etf_list):
 
             is_announced, div_amount, ex_date, pay_date = False, 0, "待官方公告", "待官方公告"
             
-            try:
+try:
     divs = tk.dividends
 
     if not divs.empty:
