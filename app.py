@@ -407,11 +407,11 @@ def fetch_data(etf_list):
 
                     is_announced = True
 
-             except Exception as e:
+            except Exception as e:
                 print(f"配息抓取失敗: {e}")
 
-             # ===== API 抓不到 → 使用手動資料庫 =====
-             if div_amount == 0:
+            # ===== API 抓不到 → 使用手動資料庫 =====
+            if div_amount == 0:
                 cfg = DIVIDEND_DB.get(item['symbol'])
 
                 if cfg:
