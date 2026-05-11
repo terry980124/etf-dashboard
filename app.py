@@ -399,22 +399,22 @@ def fetch_data(etf_list):
             ex_ts = info.get("exDividendDate")
         
             if ex_ts:
-                ex_date_obj = datetime.fromtimestamp(ex_ts)
+            ex_date_obj = datetime.fromtimestamp(ex_ts)
         
-                ex_date = ex_date_obj.strftime('%Y-%m-%d')
+            ex_date = ex_date_obj.strftime('%Y-%m-%d')
         
-                pay_date = (ex_date_obj + timedelta(days=28)).strftime('%Y-%m-%d')
+            pay_date = (ex_date_obj + timedelta(days=28)).strftime('%Y-%m-%d')
         
-                is_announced = True
+            is_announced = True
         
-             if div_amount == 0:
-                cfg = DIVIDEND_DB.get(item['symbol'])
+            if div_amount == 0:
+            cfg = DIVIDEND_DB.get(item['symbol'])
         
-                if cfg:
-                    div_amount = cfg['v']
-                    ex_date = cfg['d']
-                    pay_date = cfg['p']
-                    is_announced = True
+            if cfg:
+            div_amount = cfg['v']
+            ex_date = cfg['d']
+            pay_date = cfg['p']
+            is_announced = True
 
             est_yield = 0.0
             months_to_pay = DIVIDEND_SCHEDULE.get(item['symbol'], [])
