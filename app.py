@@ -392,22 +392,33 @@ def fetch_data(etf_list):
 
             is_announced, div_amount, ex_date, pay_date = False, 0, "待官方公告", "待官方公告"
             
-            cfg = DIVIDEND_DB.get(item['symbol'])
-            if cfg:
-                div_amount = cfg['v']
-                ex_date = cfg['d']
-                pay_date = cfg['p']
-                is_announced = True
-            else:
-                actions = tk.actions
-                if not actions.empty:
-                    latest = actions.sort_index(ascending=False).head(1)
-                    div_amount = float(latest['Dividends'].values[0]) 
-                    last_ex_date_obj = latest.index[0].replace(tzinfo=None)
-                    if last_ex_date_obj.date() >= today.date():
-                        ex_date = last_ex_date_obj.strftime('%Y-%m-%d')
-                        pay_date = (last_ex_date_obj + timedelta(days=28)).strftime('%Y-%m-%d') 
-                        is_announced = True
+            try:
+    divs = tk.dividends
+
+    if not divs.empty:
+        latest_div_date = divs.index[-1]
+        latest_div_amount = float(divs.iloc[-1])
+
+        div_amount = latest_div_amount
+        ex_date = latest_div_date.strftime('%Y-%m-%d')
+
+        # ETF 通常約 28 天後發放
+        pay_date = (latest_div_date + timedelta(days=28)).strftime('%Y-%m-%d')
+
+        is_announced = True
+
+except Exception as e:
+    print(f"配息抓取失敗: {e}")
+
+# ===== API 抓不到 → 使用手動資料庫 =====
+if div_amount == 0:
+    cfg = DIVIDEND_DB.get(item['symbol'])
+
+    if cfg:
+        div_amount = cfg['v']
+        ex_date = cfg['d']
+        pay_date = cfg['p']
+        is_announced = True
 
             est_yield = 0.0
             months_to_pay = DIVIDEND_SCHEDULE.get(item['symbol'], [])
